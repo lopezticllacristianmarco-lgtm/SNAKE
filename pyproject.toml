@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "snake-game"
+version = "1.1.0"
+description = "Professional, refactored Snake game (pygame)."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+    "pygame>=2.5",
+]
+
+[project.scripts]
+snake = "snake_game.app:main"
+
+# Estructura "src layout": el paquete vive en la subcarpeta ./src/snake_game
+# (app.py, core/, ui/, assets/ ...). Esto permite a pip exponerlo de forma
+# editable correctamente y que el comando "snake" funcione desde cualquier dir.
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["snake_game*"]
+
+[tool.setuptools.package-data]
+snake_game = ["assets/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B"]
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["snake_game"]
